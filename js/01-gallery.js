@@ -27,11 +27,10 @@ function openModal(event) {
   }
 
   const imgSrc = event.target.dataset.source;
-  //   console.log(imgSrc);
+
   const instance = basicLightbox.create(`
     <img src="${imgSrc}" width="800" height="600">
     `);
-
   instance.show();
   window.addEventListener('keydown', closeModalEsc);
 }
@@ -43,5 +42,4 @@ function closeModalEsc(event) {
 
   modalImg.remove();
   window.removeEventListener('keydown', closeModalEsc);
-  console.log(event.key);
 }
