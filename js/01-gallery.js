@@ -25,21 +25,23 @@ function openModal(event) {
   if (event.target.classList.value !== 'gallery__image') {
     return;
   }
-
   const imgSrc = event.target.dataset.source;
+  const instance = basicLightbox.create(
+    `
+  <img src="${imgSrc}" width="800" height="600">
 
-  const instance = basicLightbox.create(`
-    <img src="${imgSrc}" width="800" height="600">
-    `);
+
+    `,
+    {
+      onShow: () => document.addEventListener('keydown', closeModalEsc),
+      onClose: () => document.removeEventListener('keydown', closeModalEsc),
+    }
+  );
   instance.show();
-  window.addEventListener('keydown', closeModalEsc);
-}
-function closeModalEsc(event) {
-  const modalImg = document.querySelector('.basicLightbox');
-  if (event.key !== 'Escape') {
-    return;
-  }
 
-  modalImg.remove();
-  window.removeEventListener('keydown', closeModalEsc);
+  function closeModalEsc(event) {
+    if (event.key === 'Escape') {
+      instance.close();
+    }
+  }
 }
